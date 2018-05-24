@@ -17,7 +17,7 @@ if(!isset($arParams["CACHE_TIME"]))
 
 $rs_Section = CIBlockSection::GetList(array(), array('IBLOCK_ID' => intval($arParams['IBLOCKS']['0'])), false, array('NAME', 'ID'));
 while ($ar_Section = $rs_Section->GetNext()) {
-    $arResult["SECTIONS"][] = array(  
+    $arResult["SECTIONS_STUFF"][] = array(  
         'MY_SECTION_ID' => $ar_Section['ID'], 
         'MY_SECTION_NAME' => $ar_Section['NAME'],
     ); 
@@ -28,7 +28,7 @@ $arSelect = Array("ID", "NAME", "DETAIL_TEXT", "PROPERTY_VAC_STAZH", "PROPERTY_V
 $arFilter = Array("IBLOCK_ID"=> intval($arParams['IBLOCKS']['0']), "ACTIVE"=>"Y");
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 while($arFields = $res->GetNext()) {
-	$arResult["ITEMS"][] = array(
+	$arResult["ITEMS_STUFF"][] = array(
 		'MY_ELEMENT_ID' => $arFields['ID'],
 		'MY_ELEMENT_NAME' => $arFields['NAME'],
 		'MY_ELEMENT_DETAIL_TEXT' => $arFields['DETAIL_TEXT'],
@@ -39,5 +39,18 @@ while($arFields = $res->GetNext()) {
 	);
 };
 
-my_dump($arResult);
+foreach ($arResult["SECTIONS_STUFF"] as $keySect ) {
+	foreach ($arResult["ITEMS_STUFF"] as $keyItem) {
+		if ($keySect["MY_SECTION_ID"] == $keyItem["MY_ELEMENT_SECTION_ID"]) {
+			$arResult["ITEM"][] = array(
+			'MY_ELEMENT_NAME' => $keyItem['MY_ELEMENT_NAME'],
+			'MY_ELEMENT_DETAIL_TEXT' => $keyItem['MY_ELEMENT_DETAIL_TEXT'],
+			'MY_ELEMENT_PROPERTY_VAC_STAZH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_STAZH'],
+			'MY_ELEMENT_PROPERTY_VAC_GRAPH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_GRAPH'],
+			'MY_ELEMENT_PROPERTY_VAC_EDU' => $keyItem['MY_ELEMENT_PROPERTY_VAC_EDU'],
+			'MY_ELEMENT_SECTION_NAME' => $keySect['MY_SECTION_NAME']
+			);
+		};
+	};
+};
 ?>
