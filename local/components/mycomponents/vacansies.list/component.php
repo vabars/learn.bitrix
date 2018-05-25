@@ -53,4 +53,5 @@ foreach ($arResult["SECTIONS_STUFF"] as $keySect ) {
 		};
 	};
 };
+my_dump($arResult['ITEM']);
 ?>
