@@ -15,6 +15,7 @@ if(!CModule::IncludeModule("iblock"))
 if(!isset($arParams["CACHE_TIME"]))
     $arParams["CACHE_TIME"] = 360000;
 
+//Собираем Имя и ID разделов инфоблока
 $rs_Section = CIBlockSection::GetList(array(), array('IBLOCK_ID' => intval($arParams['IBLOCKS']['0'])), false, array('NAME', 'ID'));
 while ($ar_Section = $rs_Section->GetNext()) {
     $arResult["SECTIONS_STUFF"][] = array(  
@@ -23,7 +24,7 @@ while ($ar_Section = $rs_Section->GetNext()) {
     ); 
 };
 
-
+//Собираем нужные параметры элементов инфоблока
 $arSelect = Array("ID", "NAME", "DETAIL_TEXT", "PROPERTY_VAC_STAZH", "PROPERTY_VAC_GRAPH", "PROPERTY_VAC_EDU", "IBLOCK_SECTION_ID");
 $arFilter = Array("IBLOCK_ID"=> intval($arParams['IBLOCKS']['0']), "ACTIVE"=>"Y");
 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -39,19 +40,21 @@ while($arFields = $res->GetNext()) {
 	);
 };
 
-foreach ($arResult["SECTIONS_STUFF"] as $keySect ) {
+// формируем дерево
+$arResult["TREE"] = array();
+foreach ($arResult["SECTIONS_STUFF"] as $keySect) {
+	$arResult["TREE"][$keySect['MY_SECTION_NAME']] = array();
 	foreach ($arResult["ITEMS_STUFF"] as $keyItem) {
 		if ($keySect["MY_SECTION_ID"] == $keyItem["MY_ELEMENT_SECTION_ID"]) {
-			$arResult["ITEM"][] = array(
-			'MY_ELEMENT_NAME' => $keyItem['MY_ELEMENT_NAME'],
-			'MY_ELEMENT_DETAIL_TEXT' => $keyItem['MY_ELEMENT_DETAIL_TEXT'],
-			'MY_ELEMENT_PROPERTY_VAC_STAZH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_STAZH'],
-			'MY_ELEMENT_PROPERTY_VAC_GRAPH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_GRAPH'],
-			'MY_ELEMENT_PROPERTY_VAC_EDU' => $keyItem['MY_ELEMENT_PROPERTY_VAC_EDU'],
-			'MY_ELEMENT_SECTION_NAME' => $keySect['MY_SECTION_NAME']
+			$arResult["TREE"][$keySect['MY_SECTION_NAME']][] = array(
+				'MY_ELEMENT_NAME' => $keyItem['MY_ELEMENT_NAME'],
+				'MY_ELEMENT_DETAIL_TEXT' => $keyItem['MY_ELEMENT_DETAIL_TEXT'],
+				'MY_ELEMENT_PROPERTY_VAC_STAZH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_STAZH'],
+				'MY_ELEMENT_PROPERTY_VAC_GRAPH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_GRAPH'],
+				'MY_ELEMENT_PROPERTY_VAC_EDU' => $keyItem['MY_ELEMENT_PROPERTY_VAC_EDU']
 			);
 		};
 	};
 };
-my_dump($arResult['ITEM']);
+my_dump($arResult['TREE']);
 ?>
