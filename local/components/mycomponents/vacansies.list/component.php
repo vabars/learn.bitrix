@@ -15,6 +15,9 @@ if(!CModule::IncludeModule("iblock"))
 if(!isset($arParams["CACHE_TIME"]))
     $arParams["CACHE_TIME"] = 360000;
 
+//Включаем кеширование
+$this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()));
+
 //Собираем Имя и ID разделов инфоблока
 $rs_Section = CIBlockSection::GetList(array(), array('IBLOCK_ID' => intval($arParams['IBLOCKS']['0'])), false, array('NAME', 'ID'));
 while ($ar_Section = $rs_Section->GetNext()) {
@@ -56,5 +59,8 @@ foreach ($arResult["SECTIONS_STUFF"] as $keySect) {
 		};
 	};
 };
-my_dump($arResult['TREE']);
+
+//Записываем данные в кэш, и подключаем template
+$this->SetResultCacheKeys(array());
+$this->IncludeComponentTemplate();
 ?>

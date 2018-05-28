@@ -1,3 +1,6 @@
-.news-date-time {
-	color:#486DAA;
+span.vacdesc {
+	font-weight: bold;
+}
+.extremum-slide {
+	display:none;
 }
