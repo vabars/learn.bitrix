@@ -11,7 +11,7 @@ $APPLICATION->SetTitle("тест");
 			0 => "4",
 		),
 		"CACHE_TYPE" => "A",
-		"CACHE_TIME" => "300",
+		"CACHE_TIME" => "3600",
 		"CACHE_GROUPS" => "Y"
 	),
 	false

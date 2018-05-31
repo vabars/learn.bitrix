@@ -50,6 +50,7 @@ foreach ($arResult["SECTIONS_STUFF"] as $keySect) {
 	foreach ($arResult["ITEMS_STUFF"] as $keyItem) {
 		if ($keySect["MY_SECTION_ID"] == $keyItem["MY_ELEMENT_SECTION_ID"]) {
 			$arResult["TREE"][$keySect['MY_SECTION_NAME']][] = array(
+				'MY_ELEMENT_ID' => $keyItem['MY_ELEMENT_ID'],
 				'MY_ELEMENT_NAME' => $keyItem['MY_ELEMENT_NAME'],
 				'MY_ELEMENT_DETAIL_TEXT' => $keyItem['MY_ELEMENT_DETAIL_TEXT'],
 				'MY_ELEMENT_PROPERTY_VAC_STAZH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_STAZH'],
@@ -61,6 +62,8 @@ foreach ($arResult["SECTIONS_STUFF"] as $keySect) {
 };
 
 //Записываем данные в кэш, и подключаем template
-$this->SetResultCacheKeys(array());
+$this->SetResultCacheKeys(array(
+	"TREE"
+));
 $this->IncludeComponentTemplate();
 ?>
