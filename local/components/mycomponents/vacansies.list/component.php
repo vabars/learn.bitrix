@@ -15,10 +15,10 @@ if(!CModule::IncludeModule("iblock"))
 if(!isset($arParams["CACHE_TIME"]))
     $arParams["CACHE_TIME"] = 360000;
 
-//Р’РєР»СЋС‡Р°РµРј РєРµС€РёСЂРѕРІР°РЅРёРµ
+//Включаем кеширование
 if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()))) {
 
-	//РЎРѕР±РёСЂР°РµРј РРјСЏ Рё ID СЂР°Р·РґРµР»РѕРІ РёРЅС„РѕР±Р»РѕРєР°
+	//Собираем Имя и ID разделов инфоблока
 	$rs_Section = CIBlockSection::GetList(array(), array('IBLOCK_ID' => intval($arParams['IBLOCKS']['0'])), false, array('NAME', 'ID'));
 	while ($ar_Section = $rs_Section->GetNext()) {
 	    $arResult["SECTIONS_STUFF"][] = array(  
@@ -27,7 +27,7 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 	    ); 
 	};
 
-	//РЎРѕР±РёСЂР°РµРј РЅСѓР¶РЅС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ СЌР»РµРјРµРЅС‚РѕРІ РёРЅС„РѕР±Р»РѕРєР°
+	//Собираем нужные параметры элементов инфоблока
 	$arSelect = Array("ID", "NAME", "DETAIL_TEXT", "PROPERTY_VAC_STAZH", "PROPERTY_VAC_GRAPH", "PROPERTY_VAC_EDU", "IBLOCK_SECTION_ID");
 	$arFilter = Array("IBLOCK_ID"=> intval($arParams['IBLOCKS']['0']), "ACTIVE"=>"Y");
 	$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -43,12 +43,24 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 		);
 	};
 
-	// С„РѕСЂРјРёСЂСѓРµРј РґРµСЂРµРІРѕ
+	// формируем дерево
 	$arResult["TREE"] = array();
 	foreach ($arResult["SECTIONS_STUFF"] as $keySect) {
 		$arResult["TREE"][$keySect['MY_SECTION_NAME']] = array();
 		foreach ($arResult["ITEMS_STUFF"] as $keyItem) {
 			if ($keySect["MY_SECTION_ID"] == $keyItem["MY_ELEMENT_SECTION_ID"]) {
+				//Добавление кнопок эрмитажа в некешированную версию
+				$arButtons = CIBlock::GetPanelButtons(
+				$arParams['IBLOCKS']['0'],
+				$keyItem["MY_ELEMENT_ID"],
+				0,
+				array("SECTION_BUTTONS"=>false, "SESSID"=>false)
+				);
+				$arResult["ACTIONS"]["EDIT_LINK"] = $arButtons["edit"]["edit_element"]["ACTION_URL"];
+				$arResult["ACTIONS"]["DELETE_LINK"] = $arButtons["edit"]["delete_element"]["ACTION_URL"];
+				$this->AddEditAction($keyItem["MY_ELEMENT_ID"], $arResult["ACTIONS"]['EDIT_LINK'], CIBlock::GetArrayByID($arParams['IBLOCKS']['0'], "ELEMENT_EDIT"));
+				$this->AddDeleteAction($keyItem["MY_ELEMENT_ID"], $arResult["ACTIONS"]['DELETE_LINK'], CIBlock::GetArrayByID($arParams['IBLOCKS']['0'], "ELEMENT_DELETE"));
+				//Сбор основного результирующего массива
 				$arResult["TREE"][$keySect['MY_SECTION_NAME']][] = array(
 					'MY_ELEMENT_ID' => $keyItem['MY_ELEMENT_ID'],
 					'MY_ELEMENT_NAME' => $keyItem['MY_ELEMENT_NAME'],
@@ -61,21 +73,17 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 		};
 	};
 
-	//Р—Р°РїРёСЃС‹РІР°РµРј РґР°РЅРЅС‹Рµ РІ РєСЌС€, Рё РїРѕРґРєР»СЋС‡Р°РµРј template
+	//Записываем данные в кэш, и подключаем template
 	$this->SetResultCacheKeys(array(
 		"TREE"
 	));
 	$this->IncludeComponentTemplate();
 };
-
-/*if(
-	$arResult["LAST_ITEM_IBLOCK_ID"] > 0
-	&& $USER->IsAuthorized()
-	&& $APPLICATION->GetShowIncludeAreas()
-	&& CModule::IncludeModule("iblock")
-)
-{
-	$arButtons = CIBlock::GetPanelButtons($arResult["LAST_ITEM_IBLOCK_ID"], 0, 0, array("SECTION_BUTTONS"=>false));
+// формируем кнопку эрмитажа "добавить вакансию", работающую при включенном кеше.
+if(
+	$arParams['IBLOCKS']['0'] > 0 && $USER->IsAuthorized() && $APPLICATION->GetShowIncludeAreas() && CModule::IncludeModule("iblock")
+) {
+	$arButtons = CIBlock::GetPanelButtons($arParams['IBLOCKS']['0'], 0, 0, array("SECTION_BUTTONS"=>false));
 	$this->addIncludeAreaIcons(CIBlock::GetComponentMenu($APPLICATION->GetPublicShowMode(), $arButtons));
-}*/
+};
 ?>
