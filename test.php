@@ -2,17 +2,13 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("тест");
 ?><?$APPLICATION->IncludeComponent(
-	"mycomponents:vacansies.list", 
-	".default", 
-	array(
-		"COMPONENT_TEMPLATE" => ".default",
-		"IBLOCK_TYPE" => "vacancies",
-		"IBLOCKS" => array(
-			0 => "4",
-		),
-		"CACHE_TYPE" => "A",
+	"mycomponents:vacansies.list",
+	"",
+	Array(
+		"CACHE_GROUPS" => "Y",
 		"CACHE_TIME" => "3600",
-		"CACHE_GROUPS" => "Y"
-	),
-	false
+		"CACHE_TYPE" => "A",
+		"IBLOCKS" => array("4"),
+		"IBLOCK_TYPE" => "vacancies"
+	)
 );?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

@@ -1,5 +1,5 @@
 <?
-$MESS ['T_IBLOCK_DESC_LIST_ID'] = "Код информационного блока";
-$MESS ['T_IBLOCK_DESC_LIST_TYPE'] = "Тип информационного блока";
-$MESS ['CP_BNL_CACHE_GROUPS'] = "Учитывать права доступа";
+$MESS ['T_IBLOCK_DESC_LIST_TYPE'] = "Выберите инфоблок";
+$MESS ['T_IBLOCK_DESC_LIST_ID'] = "Выберите тип инфоблока";
+$MESS ['CP_BNL_CACHE_GROUPS'] = "Учитываять права доступа при кешировании?";
 ?>

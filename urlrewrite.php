@@ -16,6 +16,14 @@ $arUrlRewrite=array (
     'PATH' => '/products/index.php',
     'SORT' => 100,
   ),
+  3 => 
+  array (
+    'CONDITION' => '#^test2.php#',
+    'RULE' => '',
+    'ID' => 'mycomponents:vacansy',
+    'PATH' => '/test2.php',
+    'SORT' => 100,
+  ),
   2 => 
   array (
     'CONDITION' => '#^/news/#',
