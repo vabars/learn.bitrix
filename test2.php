@@ -16,7 +16,7 @@ $APPLICATION->SetTitle("test2");
 		"COMPONENT_TEMPLATE" => ".default",
 		"SEF_URL_TEMPLATES" => array(
 			"vacancies" => "",
-			"vacancy" => "#ELEMENT_ID#",
+			"vacancy" => "#ELEMENT_ID#/",
 			"rezume" => "#ELEMENT_ID#/rezume",
 		)
 	),

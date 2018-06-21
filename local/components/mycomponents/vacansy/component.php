@@ -8,7 +8,6 @@ $arDefaultUrlTemplates404 = array(
 
 $arComponentVariables = array(
 	"ELEMENT_ID",
-	"ELEMENT_CODE",
 );
 
 if($arParams["SEF_MODE"] == "Y") {

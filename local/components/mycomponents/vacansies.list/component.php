@@ -56,18 +56,15 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 				0,
 				array("SECTION_BUTTONS"=>false, "SESSID"=>false)
 				);
-				$arResult["ACTIONS"]["EDIT_LINK"] = $arButtons["edit"]["edit_element"]["ACTION_URL"];
-				$arResult["ACTIONS"]["DELETE_LINK"] = $arButtons["edit"]["delete_element"]["ACTION_URL"];
-				$this->AddEditAction($keyItem["MY_ELEMENT_ID"], $arResult["ACTIONS"]['EDIT_LINK'], CIBlock::GetArrayByID($arParams['IBLOCKS']['0'], "ELEMENT_EDIT"));
-				$this->AddDeleteAction($keyItem["MY_ELEMENT_ID"], $arResult["ACTIONS"]['DELETE_LINK'], CIBlock::GetArrayByID($arParams['IBLOCKS']['0'], "ELEMENT_DELETE"));
-				//—бор основного результирующего массива
 				$arResult["TREE"][$keySect['MY_SECTION_NAME']][] = array(
 					'MY_ELEMENT_ID' => $keyItem['MY_ELEMENT_ID'],
 					'MY_ELEMENT_NAME' => $keyItem['MY_ELEMENT_NAME'],
 					'MY_ELEMENT_DETAIL_TEXT' => $keyItem['MY_ELEMENT_DETAIL_TEXT'],
 					'MY_ELEMENT_PROPERTY_VAC_STAZH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_STAZH'],
 					'MY_ELEMENT_PROPERTY_VAC_GRAPH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_GRAPH'],
-					'MY_ELEMENT_PROPERTY_VAC_EDU' => $keyItem['MY_ELEMENT_PROPERTY_VAC_EDU']
+					'MY_ELEMENT_PROPERTY_VAC_EDU' => $keyItem['MY_ELEMENT_PROPERTY_VAC_EDU'],
+					'EDIT_LINK' => $arButtons["edit"]["edit_element"]["ACTION_URL"],
+					'DELETE_LINK' => $arButtons["edit"]["delete_element"]["ACTION_URL"],
 				);
 			};
 		};

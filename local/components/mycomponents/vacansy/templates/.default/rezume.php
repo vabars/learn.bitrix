@@ -2,7 +2,7 @@ rezume
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?$APPLICATION->IncludeComponent(
 	"bitrix:form.result.new",
-	"",
+	"shablon_rezume",
 	Array(
 		"CACHE_TIME" => $arParams['CACHE_TIME'],
 		"CACHE_TYPE" => $arParams['CACHE_TIME'],
@@ -14,6 +14,7 @@ rezume
 		"SEF_MODE" => "N",
 		"SUCCESS_URL" => "",
 		"USE_EXTENDED_ERRORS" => "N",
+		"ELEMENT_ID" => $arResult['VARIABLES']['ELEMENT_ID'],
 		"VARIABLE_ALIASES" => Array(
 			"RESULT_ID" => "RESULT_ID",
 			"WEB_FORM_ID" => "WEB_FORM_ID"
