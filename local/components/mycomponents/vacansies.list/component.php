@@ -28,7 +28,7 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 	};
 
 	//Собираем нужные параметры элементов инфоблока
-	$arSelect = Array("ID", "NAME", "DETAIL_TEXT", "PROPERTY_VAC_STAZH", "PROPERTY_VAC_GRAPH", "PROPERTY_VAC_EDU", "IBLOCK_SECTION_ID");
+	$arSelect = Array("ID", "NAME", "DETAIL_TEXT", "PROPERTY_VAC_STAZH", "PROPERTY_VAC_GRAPH", "PROPERTY_VAC_EDU", "IBLOCK_SECTION_ID", "DETAIL_PAGE_URL", "LIST_PAGE_URL");
 	$arFilter = Array("IBLOCK_ID"=> intval($arParams['IBLOCKS']['0']), "ACTIVE"=>"Y");
 	$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
 	while($arFields = $res->GetNext()) {
@@ -39,7 +39,8 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 			'MY_ELEMENT_PROPERTY_VAC_STAZH' => $arFields['PROPERTY_VAC_STAZH_VALUE'],
 			'MY_ELEMENT_PROPERTY_VAC_GRAPH' => $arFields['PROPERTY_VAC_GRAPH_VALUE'],
 			'MY_ELEMENT_PROPERTY_VAC_EDU' => $arFields['PROPERTY_VAC_EDU_VALUE'],
-			'MY_ELEMENT_SECTION_ID' => $arFields['IBLOCK_SECTION_ID']
+			'MY_ELEMENT_SECTION_ID' => $arFields['IBLOCK_SECTION_ID'],
+			'MY_ELEMENT_DETAIL_PAGE_URL'=> $arFields['DETAIL_PAGE_URL']
 		);
 	};
 
@@ -63,13 +64,13 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 					'MY_ELEMENT_PROPERTY_VAC_STAZH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_STAZH'],
 					'MY_ELEMENT_PROPERTY_VAC_GRAPH' => $keyItem['MY_ELEMENT_PROPERTY_VAC_GRAPH'],
 					'MY_ELEMENT_PROPERTY_VAC_EDU' => $keyItem['MY_ELEMENT_PROPERTY_VAC_EDU'],
+					'MY_ELEMENT_DETAIL_PAGE_URL' => $keyItem['MY_ELEMENT_DETAIL_PAGE_URL'],
 					'EDIT_LINK' => $arButtons["edit"]["edit_element"]["ACTION_URL"],
 					'DELETE_LINK' => $arButtons["edit"]["delete_element"]["ACTION_URL"],
 				);
 			};
 		};
 	};
-
 	//Записываем данные в кэш, и подключаем template
 	$this->SetResultCacheKeys(array(
 		"TREE"

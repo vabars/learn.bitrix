@@ -2,7 +2,6 @@
 if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 ?>
 <?if ($arResult["isFormErrors"] == "Y"):?><?=$arResult["FORM_ERRORS_TEXT"];?><?endif;?>
-
 <?=$arResult["FORM_NOTE"]?>
 
 <?if ($arResult["isFormNote"] != "Y")
@@ -61,7 +60,7 @@ if ($arResult["isFormTitle"])
 	{
 		if ($arQuestion['STRUCTURE'][0]['FIELD_TYPE'] == 'hidden')
 		{
-			echo str_replace('#MY_ELEMENT#', $arParams['ELEMENT_ID'], $arQuestion["HTML_CODE"]);
+			echo str_replace('#MY_ELEMENT#', $arResult['FORM_ELEMENT_NAME'], $arQuestion["HTML_CODE"]);
 		}
 		else
 		{
@@ -74,7 +73,7 @@ if ($arResult["isFormTitle"])
 				<?=$arQuestion["CAPTION"]?><?if ($arQuestion["REQUIRED"] == "Y"):?><?=$arResult["REQUIRED_SIGN"];?><?endif;?>
 				<?=$arQuestion["IS_INPUT_CAPTION_IMAGE"] == "Y" ? "<br />".$arQuestion["IMAGE"]["HTML_CODE"] : ""?>
 			</td>
-			<td><?=str_replace('#MY_ELEMENT#', $arParams['ELEMENT_ID'], $arQuestion["HTML_CODE"]);?></td>
+			<td><?=str_replace('#MY_ELEMENT#', $arResult['FORM_ELEMENT_NAME'], $arQuestion["HTML_CODE"]);?></td>
 		</tr>
 	<?
 		}
@@ -118,4 +117,3 @@ if($arResult["isUseCaptcha"] == "Y")
 <?
 } //endif (isFormNote)
 ?>
-<?my_dump($arParams);?>

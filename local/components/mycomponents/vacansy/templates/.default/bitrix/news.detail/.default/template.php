@@ -20,9 +20,5 @@ $this->setFrameMode(true);
 		<?echo $arResult["DETAIL_TEXT"];?>
 	<?endif?>
 	<div style="clear:both"></div>
-	<a href="rezume">Подать резюме</a>
+	<a href="<?$arResult['DETAIL_PAGE_URL']?>rezume/">Подать резюме</a>
 </div>
-<?
-echo "<br/> Параметры из template";
-my_dump($arParams);
-?>

@@ -2,7 +2,7 @@
 <?
 $arDefaultUrlTemplates404 = array(
 	"vacancies" => "",
-	"rezume" => "rezume/",
+	"rezume" => "rezume/#ELEMENT_ID#/",
 	"vacancy" => "#ELEMENT_ID#/",
 );
 
@@ -16,23 +16,21 @@ if($arParams["SEF_MODE"] == "Y") {
 	$arVariables = array();
 	
 	$componentPage = CComponentEngine::ParseComponentPath(
-		$arParams["SEF_FOLDER"],
-		$arUrlTemplates,
-		$arVariables
+			$arParams["SEF_FOLDER"],
+			$arUrlTemplates,
+			$arVariables
 		);
-		
+
 	if(!$componentPage)
 	{
 		$componentPage = "vacancies";
 	}
-	
-	$arResult = array(
+		$arResult = array(
 		"FOLDER" => $arParams["SEF_FOLDER"],
 		"URL_TEMPLATES" => $arUrlTemplates,
-		"VARIABLES" => $arVariables);
-	
+		"VARIABLES" => $arVariables
+	);
 }
-
 $this->IncludeComponentTemplate($componentPage);
 ?>
 

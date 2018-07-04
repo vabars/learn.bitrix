@@ -1,5 +1,4 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-<?my_dump($arParams['SEF_URL_TEMPLATES']['rezume']);?>
 <?
 $APPLICATION->IncludeComponent(
 	"bitrix:news.detail",
@@ -14,7 +13,7 @@ $APPLICATION->IncludeComponent(
 		"FIELD_CODE" => array("",""),
 		"IBLOCK_ID" => $arParams['IBLOCK_ID'],
 		"IBLOCK_TYPE" => $arParams['IBLOCK_TYPE'],
-		"IBLOCK_URL" => "",
+		"REZUME_URL" =>	$arParams['SEF_FOLDER'] . $arResult['URL_TEMPLATES']['rezume']
 	),
 $component
 );

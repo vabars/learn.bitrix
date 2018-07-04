@@ -2,23 +2,23 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("test2");
 ?><?$APPLICATION->IncludeComponent(
-	"mycomponents:vacansy", 
-	".default", 
-	array(
+	"mycomponents:afisha2",
+	"",
+	Array(
+		"ADD_GROUP_PERMISSIONS" => array("1"),
+		"AJAX_MODE" => "N",
+		"AJAX_OPTION_ADDITIONAL" => "",
+		"AJAX_OPTION_HISTORY" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
 		"CACHE_TIME" => "36000000",
 		"CACHE_TYPE" => "A",
+		"DATE_FORMAT" => "d.m.Y",
 		"IBLOCK_ID" => "4",
-		"IBLOCK_TYPE" => "vacancies",
-		"SEF_FOLDER" => "test2.php",
-		"SEF_MODE" => "Y",
+		"IBLOCK_TYPE" => "news",
+		"SEF_MODE" => "N",
+		"SET_TITLE" => "Y",
 		"USE_REVIEW" => "N",
-		"WEB_FORM_ID" => "1",
-		"COMPONENT_TEMPLATE" => ".default",
-		"SEF_URL_TEMPLATES" => array(
-			"vacancies" => "",
-			"vacancy" => "#ELEMENT_ID#/",
-			"rezume" => "#ELEMENT_ID#/rezume",
-		)
-	),
-	false
-);?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+		"VARIABLE_ALIASES" => Array("ELEMENT_ID"=>"ELEMENT_ID")
+	)
+);?><br><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

@@ -8,7 +8,7 @@
 		"CACHE_TYPE" => $arParams['CACHE_TIME'],
 		"IBLOCKS" => $arParams['IBLOCK_ID'],
 		"IBLOCK_TYPE" => $arParams['IBLOCK_TYPE'],
-		"DETAIL_URL" =>	$arResult["FOLDER"].$arResult["URL_TEMPLATES"]["vacancy"]
+		"DETAIL_URL" =>	$arParams['SEF_FOLDER'] . $arResult['URL_TEMPLATES']['vacancy']
 	),
 $component
 );
