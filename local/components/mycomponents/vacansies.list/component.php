@@ -15,10 +15,10 @@ if(!CModule::IncludeModule("iblock"))
 if(!isset($arParams["CACHE_TIME"]))
     $arParams["CACHE_TIME"] = 360000;
 
-//Âêëþ÷àåì êåøèðîâàíèå
+//Ã‚ÃªÃ«Ã¾Ã·Ã Ã¥Ã¬ ÃªÃ¥Ã¸Ã¨Ã°Ã®Ã¢Ã Ã­Ã¨Ã¥
 if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()))) {
 
-	//Ñîáèðàåì Èìÿ è ID ðàçäåëîâ èíôîáëîêà
+	//Ã‘Ã®Ã¡Ã¨Ã°Ã Ã¥Ã¬ ÃˆÃ¬Ã¿ Ã¨ ID Ã°Ã Ã§Ã¤Ã¥Ã«Ã®Ã¢ Ã¨Ã­Ã´Ã®Ã¡Ã«Ã®ÃªÃ 
 	$rs_Section = CIBlockSection::GetList(array(), array('IBLOCK_ID' => intval($arParams['IBLOCKS']['0'])), false, array('NAME', 'ID'));
 	while ($ar_Section = $rs_Section->GetNext()) {
 	    $arResult["SECTIONS_STUFF"][] = array(  
@@ -27,7 +27,7 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 	    ); 
 	};
 
-	//Ñîáèðàåì íóæíûå ïàðàìåòðû ýëåìåíòîâ èíôîáëîêà
+	//Ã‘Ã®Ã¡Ã¨Ã°Ã Ã¥Ã¬ Ã­Ã³Ã¦Ã­Ã»Ã¥ Ã¯Ã Ã°Ã Ã¬Ã¥Ã²Ã°Ã» Ã½Ã«Ã¥Ã¬Ã¥Ã­Ã²Ã®Ã¢ Ã¨Ã­Ã´Ã®Ã¡Ã«Ã®ÃªÃ 
 	$arSelect = Array("ID", "NAME", "DETAIL_TEXT", "PROPERTY_VAC_STAZH", "PROPERTY_VAC_GRAPH", "PROPERTY_VAC_EDU", "IBLOCK_SECTION_ID", "DETAIL_PAGE_URL", "LIST_PAGE_URL");
 	$arFilter = Array("IBLOCK_ID"=> intval($arParams['IBLOCKS']['0']), "ACTIVE"=>"Y");
 	$res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -44,13 +44,13 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 		);
 	};
 
-	// ôîðìèðóåì äåðåâî
+	// Ã´Ã®Ã°Ã¬Ã¨Ã°Ã³Ã¥Ã¬ Ã¤Ã¥Ã°Ã¥Ã¢Ã®
 	$arResult["TREE"] = array();
 	foreach ($arResult["SECTIONS_STUFF"] as $keySect) {
 		$arResult["TREE"][$keySect['MY_SECTION_NAME']] = array();
 		foreach ($arResult["ITEMS_STUFF"] as $keyItem) {
 			if ($keySect["MY_SECTION_ID"] == $keyItem["MY_ELEMENT_SECTION_ID"]) {
-				//Äîáàâëåíèå êíîïîê ýðìèòàæà â íåêåøèðîâàííóþ âåðñèþ
+				//Ã„Ã®Ã¡Ã Ã¢Ã«Ã¥Ã­Ã¨Ã¥ ÃªÃ­Ã®Ã¯Ã®Ãª Ã½Ã°Ã¬Ã¨Ã²Ã Ã¦Ã  Ã¢ Ã­Ã¥ÃªÃ¥Ã¸Ã¨Ã°Ã®Ã¢Ã Ã­Ã­Ã³Ã¾ Ã¢Ã¥Ã°Ã±Ã¨Ã¾
 				$arButtons = CIBlock::GetPanelButtons(
 				$arParams['IBLOCKS']['0'],
 				$keyItem["MY_ELEMENT_ID"],
@@ -71,13 +71,13 @@ if($this->StartResultCache(false, ($arParams["CACHE_GROUPS"]==="N"? false: $USER
 			};
 		};
 	};
-	//Çàïèñûâàåì äàííûå â êýø, è ïîäêëþ÷àåì template
+	//Ã‡Ã Ã¯Ã¨Ã±Ã»Ã¢Ã Ã¥Ã¬ Ã¤Ã Ã­Ã­Ã»Ã¥ Ã¢ ÃªÃ½Ã¸, Ã¨ Ã¯Ã®Ã¤ÃªÃ«Ã¾Ã·Ã Ã¥Ã¬ template
 	$this->SetResultCacheKeys(array(
 		"TREE"
 	));
 	$this->IncludeComponentTemplate();
 };
-// ôîðìèðóåì êíîïêó ýðìèòàæà "äîáàâèòü âàêàíñèþ", ðàáîòàþùóþ ïðè âêëþ÷åííîì êåøå.
+// Ã´Ã®Ã°Ã¬Ã¨Ã°Ã³Ã¥Ã¬ ÃªÃ­Ã®Ã¯ÃªÃ³ Ã½Ã°Ã¬Ã¨Ã²Ã Ã¦Ã  "Ã¤Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼ Ã¢Ã ÃªÃ Ã­Ã±Ã¨Ã¾", Ã°Ã Ã¡Ã®Ã²Ã Ã¾Ã¹Ã³Ã¾ Ã¯Ã°Ã¨ Ã¢ÃªÃ«Ã¾Ã·Ã¥Ã­Ã­Ã®Ã¬ ÃªÃ¥Ã¸Ã¥.
 if(
 	$arParams['IBLOCKS']['0'] > 0 && $USER->IsAuthorized() && $APPLICATION->GetShowIncludeAreas() && CModule::IncludeModule("iblock")
 ) {
